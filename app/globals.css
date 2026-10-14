@@ -173,3 +173,152 @@ button:focus-visible, input:focus-visible { outline: 3px solid #8154c0; outline-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+
+/* =========================================
+   FULL VIEWPORT — ALL SCREENS
+   ========================================= */
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.app-shell {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* START SCREEN */
+
+.start-layout {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+  flex: 1 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.copy-column {
+  min-width: 0;
+  padding: clamp(20px, 5vw, 80px);
+}
+
+.illustration-column {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+}
+
+.art-frame {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  min-height: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* GAME SCREEN */
+
+.game-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* CELEBRATION SCREEN */
+
+.celebrate-screen {
+  width: 100%;
+  min-height: 100%;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ENDING SCREEN */
+
+.ending-screen {
+  width: 100%;
+  max-width: none;
+  min-height: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* MOBILE */
+
+@media (max-width: 780px) {
+  .start-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(180px, 1fr);
+  }
+
+  .copy-column {
+    align-items: center;
+    text-align: center;
+    padding: 24px 20px 8px;
+  }
+
+  .illustration-column {
+    width: 100%;
+    min-height: 180px;
+    padding: 0 16px 20px;
+  }
+
+  .art-frame {
+    max-height: none;
+  }
+
+  .love-art {
+    width: min(100%, 340px);
+    max-height: 100%;
+  }
+
+  .ending-screen {
+    padding: 24px 16px;
+  }
+}
+
+/* SHORT SCREENS */
+
+@media (max-height: 650px) {
+  .start-layout {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .ending-screen {
+    min-height: 100%;
+  }
+
+  .ending-illustration {
+    width: 190px;
+    height: 160px;
+  }
+}
