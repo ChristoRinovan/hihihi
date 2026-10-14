@@ -3,7 +3,7 @@
 import { forwardRef } from "react";
 
 const MovingButton = forwardRef(function MovingButton(
-  { position, onCatch, progress, target, busy, fakeCatch },
+  { position, onCatch, busy, fakeCatch },
   ref,
 ) {
   return (
@@ -11,7 +11,7 @@ const MovingButton = forwardRef(function MovingButton(
       ref={ref}
       type="button"
       onClick={onCatch}
-      aria-label={`Tangkap hati. Klik berhasil ${progress} dari ${target}.`}
+      aria-label="Tangkap hati"
       aria-disabled={busy}
       className={`moving-button ${fakeCatch ? "moving-button--fake" : ""} ${position ? "" : "moving-button--center"}`}
       style={position ? { left: `${position.x}px`, top: `${position.y}px` } : undefined}

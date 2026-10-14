@@ -5,7 +5,8 @@ import { getRandomPosition } from "../lib/game";
 import GameDialog from "./GameDialog";
 import MovingButton from "./MovingButton";
 
-export default function GameScreen({ name, target, progress, dialog, busy, fakeCatch, moveSignal, onCatch }) {
+// Seluruh viewport adalah lahan permainan (tanpa box, skor, atau progress bar).
+export default function GameScreen({ dialog, busy, fakeCatch, moveSignal, onCatch }) {
   const areaRef = useRef(null);
   const buttonRef = useRef(null);
   const [position, setPosition] = useState(null);
@@ -27,7 +28,7 @@ export default function GameScreen({ name, target, progress, dialog, busy, fakeC
     const last = previousPositionRef.current;
     if (last && width > 220 && height > 220) {
       for (let attempt = 0; attempt < 8; attempt++) {
-        if (Math.hypot(candidate.x - last.x, candidate.y - last.y) >= 80) break;
+        if (Math.hypot(candidate.x - last.x, candidate.y - last.y) >= 120) break;
         candidate = getRandomPosition(width, height, buttonWidth, buttonHeight);
       }
     }
@@ -67,21 +68,13 @@ export default function GameScreen({ name, target, progress, dialog, busy, fakeC
   }, [reposition]);
 
   return (
-    <section className="game-screen" aria-labelledby="game-title">
-      <div className="game-topline"><span className="step-tag">STEP 02 / 02</span><span className="game-player">playing as <strong>{name}</strong> ♡</span></div>
-      <div className="game-heading">
-        <div><h1 id="game-title" className="section-title">Catch my heart! <span aria-hidden="true">💘</span></h1><p className="section-subtitle">Kejar tombol pink-nya sampai ketangkep, ya!</p></div>
-        <div className="score-pill" aria-label={`${progress} dari ${target} klik berhasil`}><strong>{progress}</strong><span> / {target}</span></div>
-      </div>
-      <div className="progress-track" role="progressbar" aria-label="Progres permainan" aria-valuemin={0} aria-valuemax={target} aria-valuenow={progress}>
-        <div className="progress-fill" style={{ width: `${(progress / target) * 100}%` }} />
-      </div>
-      <div className="play-area" ref={areaRef}>
-        <span className="area-deco area-deco--a" aria-hidden="true">✳</span><span className="area-deco area-deco--b" aria-hidden="true">♡</span><span className="area-deco area-deco--c" aria-hidden="true">✦</span><span className="area-deco area-deco--d" aria-hidden="true">✳</span>
-        <MovingButton ref={buttonRef} position={position} onCatch={onCatch} progress={progress} target={target} busy={busy} fakeCatch={fakeCatch} />
-      </div>
+    <section className="game-screen" ref={areaRef} aria-label="Area permainan">
+      <span className="area-deco area-deco--a" aria-hidden="true">✳</span>
+      <span className="area-deco area-deco--b" aria-hidden="true">♡</span>
+      <span className="area-deco area-deco--c" aria-hidden="true">✦</span>
+      <span className="area-deco area-deco--d" aria-hidden="true">✳</span>
+      <MovingButton ref={buttonRef} position={position} onCatch={onCatch} busy={busy} fakeCatch={fakeCatch} />
       <GameDialog message={dialog} />
-      <p className="game-hint">💡 Tip: tombolnya suka kabur, tapi kamu pasti bisa!</p>
     </section>
   );
 }

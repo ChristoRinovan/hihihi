@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  MIN_CLICKS, MAX_CLICKS, DIALOGS, ENDING_MESSAGE, generateTarget,
+  MIN_CLICKS, MAX_CLICKS, PLAYER_NAME, DIALOGS, ENDING_MESSAGE, generateTarget,
   pickDialog, getRandomPosition, shouldFakeCatch, shouldShowDialog,
 } from "../lib/game.js";
 
@@ -66,4 +66,9 @@ test("ending text is exact", () => {
     ENDING_MESSAGE,
     "You don't have to be perfect today. Just take things one step at a time. I'm rooting for you, always. 💗",
   );
+});
+
+test("player name is configured in lib and is a non-empty string", () => {
+  assert.equal(typeof PLAYER_NAME, "string");
+  assert.ok(PLAYER_NAME.trim().length > 0);
 });

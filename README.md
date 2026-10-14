@@ -1,6 +1,6 @@
 # Mischievous Love 💗
 
-Mini-game Next.js App Router untuk menyemangati pasangan: isi nama, kejar tombol yang kabur, lalu buka pesan cinta kecil di akhir. Tanpa backend, database, API route, analytics, font/gambar eksternal, atau environment variable. Berjalan di mobile dan desktop.
+Mini-game Next.js App Router untuk menyemangati pasangan: kejar tombol yang kabur di seluruh layar, lalu buka pesan cinta kecil di akhir. Tanpa backend, database, API route, analytics, font/gambar eksternal, atau environment variable. Berjalan di mobile dan desktop.
 
 ## Prasyarat
 
@@ -39,7 +39,7 @@ Mini-game Next.js App Router untuk menyemangati pasangan: isi nama, kejar tombol
 
 ## Ubah konten
 
-- `lib/game.js`: `DIALOGS` (12 kalimat jahil), `ENDING_MESSAGE` (pesan terakhir), `MIN_CLICKS` / `MAX_CLICKS` (batas target). `generateTarget()` menggunakan rumus yang ditentukan spesifikasi: `Math.floor(Math.random() * 5) + 6`; jika ingin mengubah batas, sesuaikan rumus dan test.
+- `lib/game.js`: **`PLAYER_NAME`** (nama yang muncul di ending, ganti sesukamu), `DIALOGS` (12 kalimat jahil), `ENDING_MESSAGE` (pesan terakhir), `MIN_CLICKS` / `MAX_CLICKS` (batas target). `generateTarget()` menggunakan rumus yang ditentukan spesifikasi: `Math.floor(Math.random() * 5) + 6`; jika ingin mengubah batas, sesuaikan rumus dan test.
 - `components/SurpriseEnding.jsx`: tampilan layar ending.
 - `components/LoveIllustration.jsx`: ilustrasi SVG internal.
 - `app/globals.css`: warna pastel, layout, animasi, responsivitas.

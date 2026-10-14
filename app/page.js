@@ -2,16 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import StartScreen from "../components/StartScreen";
-import NameForm from "../components/NameForm";
 import GameScreen from "../components/GameScreen";
 import SurpriseEnding from "../components/SurpriseEnding";
 import { generateTarget, pickDialog, shouldFakeCatch, shouldShowDialog } from "../lib/game";
 
 export default function HomePage() {
   const [screen, setScreen] = useState("start");
-  const [name, setName] = useState("");
-  const [target, setTarget] = useState(0);
-  const [progress, setProgress] = useState(0);
   const [dialog, setDialog] = useState("");
   const [fakeCatch, setFakeCatch] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -59,16 +55,13 @@ export default function HomePage() {
     setScreen(nextScreen);
   }
 
-  function startSession(playerName = name) {
+  function startSession() {
     clearTimers();
     const nextTarget = generateTarget();
     lockRef.current = false;
     progressRef.current = 0;
     targetRef.current = nextTarget;
     previousDialogRef.current = null;
-    setName(playerName);
-    setTarget(nextTarget);
-    setProgress(0);
     setDialog("");
     setFakeCatch(false);
     setBusy(false);
@@ -85,7 +78,6 @@ export default function HomePage() {
 
     const nextProgress = progressRef.current + 1;
     progressRef.current = nextProgress;
-    setProgress(nextProgress);
 
     if (nextProgress >= targetRef.current) {
       // No fake catch or position update is allowed on the winning click.
@@ -134,23 +126,18 @@ export default function HomePage() {
     <main className="app-shell">
       <div className="background-orb background-orb--left" aria-hidden="true" />
       <div className="background-orb background-orb--right" aria-hidden="true" />
-      <div className="site-header"><span className="brand-mark" aria-hidden="true">♥</span><span>little things, big love</span><span className="header-star" aria-hidden="true">✳</span></div>
-      <div className={`main-card ${screen === "playing" ? "main-card--game" : ""} ${screen === "won" ? "main-card--ending" : ""}`}>
-        {screen === "start" && <StartScreen onStart={() => goToScreen("name")} />}
-        {screen === "name" && <NameForm onBack={() => goToScreen("start")} onSubmit={startSession} />}
-        {screen === "playing" && (
-          <GameScreen key={sessionId} name={name} target={target} progress={progress} dialog={dialog} busy={busy} fakeCatch={fakeCatch} moveSignal={moveSignal} onCatch={catchHeart} />
-        )}
-        {screen === "celebrating" && (
-          <section className="celebrate-screen" aria-label="Berhasil, kejutan sedang dibuka" role="status" aria-live="polite">
-            <div className="celebrate-hearts" aria-hidden="true">💖 ✨ 💖</div>
-            <h1>Yaaay, ketangkep! 🎉</h1>
-            <p>Ternyata kamu jago juga... ada sesuatu nih buat kamu!</p>
-          </section>
-        )}
-        {screen === "won" && <SurpriseEnding name={name} onReplay={() => startSession()} />}
-      </div>
-      <footer className="site-footer">A little magic, made just for you <span aria-hidden="true">♡</span></footer>
+      {screen === "start" && <StartScreen onStart={startSession} />}
+      {screen === "playing" && (
+        <GameScreen key={sessionId} dialog={dialog} busy={busy} fakeCatch={fakeCatch} moveSignal={moveSignal} onCatch={catchHeart} />
+      )}
+      {screen === "celebrating" && (
+        <section className="celebrate-screen" aria-label="Berhasil, kejutan sedang dibuka" role="status" aria-live="polite">
+          <div className="celebrate-hearts" aria-hidden="true">💖 ✨ 💖</div>
+          <h1>Yaaay, ketangkep! 🎉</h1>
+          <p>Ternyata kamu jago juga... ada sesuatu nih buat kamu!</p>
+        </section>
+      )}
+      {screen === "won" && <SurpriseEnding onReplay={startSession} />}
     </main>
   );
 }
