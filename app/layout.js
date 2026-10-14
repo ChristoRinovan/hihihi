@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Mischievous Love — a little game for you 💗",
-  description: "A tiny, silly love note disguised as a little game.",
+  title: "Kejar Aku — Hihihii 💗",
+  description: "Buat kamu yang lagi bete, cemberut, atau entahlah.",
   icons: { icon: "/favicon.svg" },
 };
 

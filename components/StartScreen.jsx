@@ -10,7 +10,7 @@ export default function StartScreen({ onStart }) {
   return (
     <section className="content-layout start-layout" aria-labelledby="home-title">
       <div className="copy-column">
-                <h1 id="home-title" className="hero-title">Hihihi <span></span><span className="title-heart">♡</span></h1>
+                <h1 id="home-title" className="hero-title">Hihihi <span></span></h1>
         <p className="hero-description">Jangan cemberut mulu! Main dulu yaak ✨</p>
         <button ref={startRef} type="button" className="primary-button" onClick={onStart}>
           Start the game <span aria-hidden="true">↗</span>
