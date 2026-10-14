@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import LoveIllustration from "./LoveIllustration";
-import { ENDING_MESSAGE, PLAYER_NAME } from "../lib/game";
+import { PLAYER_NAME, pickEndingMessage } from "../lib/game";
 
 export default function SurpriseEnding({ onReplay }) {
   const replayRef = useRef(null);
+  const [message] = useState(() => pickEndingMessage());
   useEffect(() => replayRef.current?.focus(), []);
 
   return (
@@ -18,7 +19,7 @@ export default function SurpriseEnding({ onReplay }) {
       <div className="ending-illustration"><LoveIllustration ending /></div>
       <h1 id="ending-title" className="ending-title">Gotcha! <span aria-hidden="true">💗</span></h1>
       <p className="ending-greeting">Ini buat kamu, <strong>{PLAYER_NAME}</strong>!</p>
-      <blockquote className="ending-message">{ENDING_MESSAGE}</blockquote>
+      <blockquote className="ending-message">{message}</blockquote>
       <p className="ending-signature">a little reminder, just for you ♡</p>
       <button ref={replayRef} type="button" className="primary-button" onClick={onReplay}>Play Again <span aria-hidden="true">↻</span></button>
     </section>

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  MIN_CLICKS, MAX_CLICKS, PLAYER_NAME, DIALOGS, ENDING_MESSAGE, generateTarget,
+  MIN_CLICKS, MAX_CLICKS, PLAYER_NAME, DIALOGS, ENDING_MESSAGES, pickEndingMessage, generateTarget,
   pickDialog, getRandomPosition, shouldFakeCatch, shouldShowDialog,
 } from "../lib/game.js";
 
@@ -61,11 +61,15 @@ test("fake catch is a nonterminal visual interruption", () => {
   assert.equal(shouldShowDialog(2, false), false);
 });
 
-test("ending text is exact", () => {
-  assert.equal(
-    ENDING_MESSAGE,
-    "You don't have to be perfect today. Just take things one step at a time. I'm rooting for you, always. 💗",
-  );
+test("ending messages are non-empty and picker returns a valid one", () => {
+  assert.ok(ENDING_MESSAGES.length >= 1);
+  for (const m of ENDING_MESSAGES) {
+    assert.equal(typeof m, "string");
+    assert.ok(m.trim().length > 0);
+  }
+  for (let i = 0; i < 300; i++) assert.ok(ENDING_MESSAGES.includes(pickEndingMessage()));
+  assert.equal(pickEndingMessage(() => 0), ENDING_MESSAGES[0]);
+  assert.equal(pickEndingMessage(() => 1), ENDING_MESSAGES[ENDING_MESSAGES.length - 1]);
 });
 
 test("player name is configured in lib and is a non-empty string", () => {
